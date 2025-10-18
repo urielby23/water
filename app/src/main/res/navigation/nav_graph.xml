@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.HomeFragment"
+        android:label="Inicio"/>
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.HistoryFragment"
+        android:label="Historial"/>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.ProfileFragment"
+        android:label="Perfil"/>
+
+    <fragment
+        android:id="@+id/tipsFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.TipsFragment"
+        android:label="Consejos"/>
+</navigation>

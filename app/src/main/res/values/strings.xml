@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Water Reminder App</string>
+    <string name="drop_icon">gota de agua</string>
 </resources>
