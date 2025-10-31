@@ -1,53 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="20dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_profile_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Perfil de Usuario"
-            android:textSize="24sp"
-            android:textColor="@color/text_primary"/>
+        <!-- 🧍 FORMULARIO DE USUARIO -->
+        <EditText
+            android:id="@+id/et_nombre"
+            android:hint="Nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/et_name"
+            android:id="@+id/et_edad"
+            android:hint="Edad"
+            android:inputType="number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/et_weight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/et_peso"
             android:hint="Peso (kg)"
-            android:inputType="number"/>
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <SeekBar
-            android:id="@+id/seek_daily_goal"
+        <EditText
+            android:id="@+id/et_meta"
+            android:hint="Meta diaria (ml)"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="5000"
-            android:progress="2000"/>
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/cb_notifications"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Recordatorios activados"/>
+            <RadioButton
+                android:id="@+id/rb_hombre"
+                android:text="Hombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-        <RadioButton
-            android:id="@+id/rb_glass"
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/rb_mujer"
+                android:text="Mujer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_guardar_perfil"
+            android:text="Guardar perfil"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Vaso (250ml)"/>
+            android:layout_marginBottom="20dp"/>
+
+        <!-- 📋 SECCIÓN PARA MOSTRAR REGISTRO DEL USUARIO -->
+        <TextView
+            android:id="@+id/tv_titulo_registro"
+            android:text="Perfil guardado:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/layout_registro"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_datos_usuario"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
