@@ -1,9 +1,7 @@
 package com.tecmilenio.waterreminderapp.ui;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,9 +13,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
 import com.tecmilenio.waterreminderapp.databinding.FragmentSettingsBinding;
-import com.tecmilenio.waterreminderapp.receivers.WaterReminderReceiver;
+import com.tecmilenio.waterreminderapp.utils.AlarmScheduler;
 import com.tecmilenio.waterreminderapp.utils.NotificationHelper;
 
 public class SettingsFragment extends Fragment {
@@ -30,7 +29,7 @@ public class SettingsFragment extends Fragment {
 
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
-        // Pedir permiso en Android 13+
+        // --- PERMISOS ANDROID 13+ ---
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -44,47 +43,58 @@ public class SettingsFragment extends Fragment {
             }
         }
 
-        binding.btnReminder.setOnClickListener(v -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                    ContextCompat.checkSelfPermission(
-                            requireContext(),
-                            android.Manifest.permission.POST_NOTIFICATIONS
-                    ) != PackageManager.PERMISSION_GRANTED) {
+        // --- SHAREDPREFERENCES ---
+        SharedPreferences prefs =
+                requireActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
 
-                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 10);
-                return;
+        // -------------------------------
+        //   BOTÓN PARA PROBAR NOTIFICACIÓN
+        // -------------------------------
+        binding.btnReminder.setOnClickListener(v -> {
+            NotificationHelper.createChannel(requireContext());
+            AlarmScheduler.schedule(requireContext());
+        });
+
+        // -------------------------------
+        //   SEEK BAR (META DIARIA)
+        // -------------------------------
+        int metaActual = prefs.getInt("meta_diaria", 2000);
+
+        binding.seekMeta.setProgress(metaActual);
+        binding.tvMetaValor.setText(metaActual + " ml");
+
+        binding.seekMeta.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                binding.tvMetaValor.setText(progress + " ml");
+                prefs.edit().putInt("meta_diaria", progress).apply();
             }
 
-            scheduleWaterReminder();
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        // -------------------------------
+        //   CHECKBOX RECORDATORIOS
+        // -------------------------------
+        boolean recordatoriosActivos =
+                prefs.getBoolean("recordatorios_activos", true);
+
+        binding.chkRecordatorios.setChecked(recordatoriosActivos);
+
+        binding.chkRecordatorios.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean("recordatorios_activos", isChecked).apply();
+
+            NotificationHelper.createChannel(requireContext());
+
+            if (isChecked) {
+                AlarmScheduler.schedule(requireContext());
+            } else {
+                AlarmScheduler.cancel(requireContext());
+            }
         });
 
         return binding.getRoot();
-    }
-
-    private void scheduleWaterReminder() {
-
-        NotificationHelper.createChannel(requireContext());
-
-        Intent intent = new Intent(requireContext(), WaterReminderReceiver.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                requireContext(),
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        long interval = 8000; // cada 8 segundos para prueba
-        long startTime = System.currentTimeMillis() + interval;
-
-        AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                startTime,
-                interval,
-                pendingIntent
-        );
     }
 
     @Override
@@ -96,7 +106,9 @@ public class SettingsFragment extends Fragment {
         if (requestCode == 10) {
             if (grantResults.length > 0 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                scheduleWaterReminder();
+
+                NotificationHelper.createChannel(requireContext());
+                AlarmScheduler.schedule(requireContext());
             }
         }
     }
