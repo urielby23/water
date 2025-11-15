@@ -1,4 +1,59 @@
 <resources>
     <string name="app_name">Water Reminder App</string>
     <string name="drop_icon">gota de agua</string>
+
+
+    <string-array name="tips_list">
+        <item>Bebe agua al despertar.</item>
+        <item>Lleva siempre una botella contigo.</item>
+        <item>Evita bebidas azucaradas.</item>
+        <item>Aumenta tu consumo de agua si haces ejercicio.</item>
+        <item>Toma un vaso de agua antes de cada comida.</item>
+        <item>Configura recordatorios para beber agua.</item>
+        <item>Bebe un vaso de agua antes de dormir.</item>
+        <item>Prefiere agua natural sobre bebidas energéticas.</item>
+        <item>Agrega rodajas de fruta para dar sabor sin azúcar.</item>
+        <item>No esperes a tener sed para hidratarte.</item>
+        <item>Incrementa tu hidratación en días calurosos.</item>
+        <item>Bebe más agua si estás enfermo o con fiebre.</item>
+        <item>Usa una app para llevar registro de tu consumo.</item>
+        <item>Reemplaza una soda al día por agua natural.</item>
+        <item>Antes de hacer ejercicio, hidrátate.</item>
+        <item>Bebe pequeños sorbos durante el día.</item>
+        <item>Evita tomar demasiada cafeína.</item>
+        <item>Bebe agua después de caminar mucho.</item>
+        <item>Llena tu botella por la mañana y mantenla a la vista.</item>
+        <item>Bebe agua cuando te sientas cansado.</item>
+        <item>Usa botellas con medidas para controlar tu consumo.</item>
+        <item>Elige botellas reutilizables para mantener un hábito.</item>
+        <item>Añade hielo si prefieres agua fría.</item>
+        <item>Hidrátate antes, durante y después de actividades físicas.</item>
+        <item>Bebe agua al regresar del trabajo o la escuela.</item>
+        <item>Evita sustituir agua con jugos comerciales.</item>
+        <item>Bebe agua cuando tengas dolor de cabeza.</item>
+        <item>Consume frutas ricas en agua como sandía.</item>
+        <item>Incluye verduras hidratantes como pepino en tus comidas.</item>
+        <item>Si tienes hambre, prueba beber agua primero.</item>
+        <item>Bebe agua después de comer alimentos salados.</item>
+        <item>No tomes demasiada agua de golpe, espárcela durante el día.</item>
+        <item>Revisa el color de tu orina para saber si estás hidratado.</item>
+        <item>Toma agua en cada descanso que hagas.</item>
+        <item>Usa alarmas si olvidas beber agua.</item>
+        <item>Bebe agua después de usar transporte público o caminar al sol.</item>
+        <item>Ten una botella siempre cerca de tu computadora.</item>
+        <item>Reemplaza bebidas alcohólicas por agua entre tragos.</item>
+        <item>Bebe más agua si consumes proteína en exceso.</item>
+        <item>Agrega un filtro a tu agua si eso te motiva a beber más.</item>
+        <item>En viajes largos, lleva siempre agua contigo.</item>
+        <item>Bebe agua cuando tengas antojo de comida.</item>
+        <item>Comienza tus comidas con un vaso de agua.</item>
+        <item>Hidrátate antes de estudiar o trabajar.</item>
+        <item>Bebe agua al sentir estrés.</item>
+        <item>No olvides hidratarte mientras juegas videojuegos.</item>
+        <item>Bebe agua después de bebidas dulces.</item>
+        <item>Mantén tu botella llena siempre.</item>
+        <item>Hidrátate cuando estés tomando el sol.</item>
+        <item>Bebe agua si sientes resequedad en la boca.</item>
+    </string-array>
+
 </resources>
