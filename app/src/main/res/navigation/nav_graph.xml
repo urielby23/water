@@ -23,4 +23,9 @@
         android:id="@+id/tipsFragment"
         android:name="com.tecmilenio.waterreminderapp.ui.TipsFragment"
         android:label="Consejos"/>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.SettingsFragment"
+        android:label="Configuración" />
 </navigation>
