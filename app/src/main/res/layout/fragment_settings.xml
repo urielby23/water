@@ -1,22 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recordatorios"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:paddingBottom="20dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/btnReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activar Recordatorio" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recordatorios"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="20dp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activar Recordatorio" />
+
+        <TextView
+            android:id="@+id/tv_meta_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meta diaria (ml)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_meta_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2000 ml"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
+
+        <SeekBar
+            android:id="@+id/seek_meta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="4000"
+            android:progress="2000"
+            android:layout_marginTop="8dp"/>
+
+        <CheckBox
+            android:id="@+id/chk_recordatorios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activar recordatorios personalizados"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

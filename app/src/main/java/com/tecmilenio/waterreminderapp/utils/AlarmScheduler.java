@@ -20,7 +20,7 @@ public class AlarmScheduler {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        long interval = 2 * 60 * 60 * 1000;
+        long interval = 2 * 60 * 60 * 1000; // cada 2 horas
         long start = System.currentTimeMillis() + interval;
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -31,5 +31,20 @@ public class AlarmScheduler {
                 interval,
                 pendingIntent
         );
+    }
+
+    public static void cancel(Context context) {
+
+        Intent intent = new Intent(context, WaterReminderReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 }
