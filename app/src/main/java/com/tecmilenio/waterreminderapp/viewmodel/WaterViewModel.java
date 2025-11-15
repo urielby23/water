@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.tecmilenio.waterreminderapp.data.WaterDatabase;
 import com.tecmilenio.waterreminderapp.data.dao.WaterIntakeDao;
+import com.tecmilenio.waterreminderapp.data.entities.DaySummary;
 import com.tecmilenio.waterreminderapp.data.entities.WaterIntake;
 
 import java.text.SimpleDateFormat;
@@ -42,5 +43,13 @@ public class WaterViewModel extends AndroidViewModel {
             String hora = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
             dao.insert(new WaterIntake(fecha, hora, cantidad, tipoRecipiente));
         });
+    }
+
+    public LiveData<List<WaterIntake>> getIntakesByDate(String fecha) {
+        return dao.getIntakesByDate(fecha);
+    }
+
+    public LiveData<List<DaySummary>> getDailySummary() {
+        return dao.getDailySummary();
     }
 }

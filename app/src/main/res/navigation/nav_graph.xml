@@ -11,8 +11,8 @@
 
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.tecmilenio.waterreminderapp.ui.HistoryFragment"
-        android:label="Historial"/>
+        android:name="com.tecmilenio.waterreminderapp.ui.DayListFragment"
+        android:label="Historial" />
 
     <fragment
         android:id="@+id/profileFragment"
@@ -28,4 +28,29 @@
         android:id="@+id/settingsFragment"
         android:name="com.tecmilenio.waterreminderapp.ui.SettingsFragment"
         android:label="Configuración" />
+
+    <fragment
+        android:id="@+id/dayListFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.DayListFragment"
+        android:label="Días">
+
+        <action
+            android:id="@+id/action_dayListFragment_to_dayDetailFragment"
+            app:destination="@id/dayDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/dayDetailFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.DayDetailFragment"
+        android:label="Detalle Día"/>
+
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.AchievementsFragment"
+        android:label="Logros"/>
+
+    <fragment
+        android:id="@+id/achievementDetailFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.AchievementDetailFragment"
+        android:label="Detalle Logro"/>
 </navigation>
