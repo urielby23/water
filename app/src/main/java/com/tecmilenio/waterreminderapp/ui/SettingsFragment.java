@@ -1,6 +1,7 @@
 package com.tecmilenio.waterreminderapp.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +19,11 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.tecmilenio.waterreminderapp.databinding.FragmentSettingsBinding;
+import com.tecmilenio.waterreminderapp.services.HydrationForegroundService;
 import com.tecmilenio.waterreminderapp.utils.AlarmScheduler;
+import com.tecmilenio.waterreminderapp.utils.LoadDataTask;
 import com.tecmilenio.waterreminderapp.utils.NotificationHelper;
+import com.tecmilenio.waterreminderapp.workers.BackupWorker;
 
 public class SettingsFragment extends Fragment {
 
@@ -48,15 +54,29 @@ public class SettingsFragment extends Fragment {
                 requireActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
 
         // -------------------------------
-        //   BOTÓN PARA PROBAR NOTIFICACIÓN
+        //   WORK MANAGER (Botón Backup)
         // -------------------------------
-        binding.btnReminder.setOnClickListener(v -> {
-            NotificationHelper.createChannel(requireContext());
-            AlarmScheduler.schedule(requireContext());
+        binding.btnBackup.setOnClickListener(v -> {
+            WorkManager.getInstance(requireContext())
+                    .enqueue(new OneTimeWorkRequest.Builder(BackupWorker.class).build());
         });
 
         // -------------------------------
-        //   SEEK BAR (META DIARIA)
+        //   FOREGROUND SERVICE
+        // -------------------------------
+        binding.btnStartService.setOnClickListener(v -> {
+            Intent s = new Intent(requireContext(), HydrationForegroundService.class);
+            ContextCompat.startForegroundService(requireContext(), s);
+        });
+
+
+        binding.btnLoadData.setOnClickListener(v -> {
+            new LoadDataTask().execute();
+        });
+
+
+        // -------------------------------
+        // SEEK BAR (META DIARIA)
         // -------------------------------
         int metaActual = prefs.getInt("meta_diaria", 2000);
 
@@ -75,7 +95,7 @@ public class SettingsFragment extends Fragment {
         });
 
         // -------------------------------
-        //   CHECKBOX RECORDATORIOS
+        // CHECKBOX RECORDATORIOS
         // -------------------------------
         boolean recordatoriosActivos =
                 prefs.getBoolean("recordatorios_activos", true);
@@ -94,9 +114,9 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
         return binding.getRoot();
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,

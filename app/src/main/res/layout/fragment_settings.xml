@@ -17,11 +17,6 @@
             android:textStyle="bold"
             android:paddingBottom="20dp" />
 
-        <Button
-            android:id="@+id/btnReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activar Recordatorio" />
 
         <TextView
             android:id="@+id/tv_meta_label"
@@ -55,6 +50,25 @@
             android:text="Activar recordatorios personalizados"
             android:textSize="16sp"
             android:layout_marginTop="24dp"/>
+
+        <Button
+            android:id="@+id/btnBackup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hacer Backup (WorkManager)" />
+
+        <Button
+            android:id="@+id/btnStartService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Iniciar Foreground Service" />
+
+        <Button
+            android:id="@+id/btnLoadData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cargar Datos (AsyncTask)" />
+
 
     </LinearLayout>
 

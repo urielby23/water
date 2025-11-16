@@ -17,9 +17,4 @@
         android:icon="@drawable/ic_tips"
         android:title="Consejos"/>
 
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="Ajustes"/>
-
 </menu>

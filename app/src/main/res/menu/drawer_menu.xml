@@ -20,4 +20,9 @@
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="Ajustes"/>
+
+    <item
+        android:id="@+id/mapFragment"
+        android:title="Mapa"
+        android:icon="@drawable/ic_maps"/>
 </menu>
