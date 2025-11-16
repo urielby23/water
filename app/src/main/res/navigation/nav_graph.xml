@@ -53,4 +53,9 @@
         android:id="@+id/achievementDetailFragment"
         android:name="com.tecmilenio.waterreminderapp.ui.AchievementDetailFragment"
         android:label="Detalle Logro"/>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.tecmilenio.waterreminderapp.ui.MapFragment"
+        android:label="Mapa" />
 </navigation>
