@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,29 +39,34 @@ public class HomeFragment extends Fragment {
         tvDailyWater = view.findViewById(R.id.tv_daily_water);
         progressBar = view.findViewById(R.id.progress_daily);
 
-        // Inicializar sonido (USAR requireActivity())
+        // Sonido
         drinkSound = MediaPlayer.create(requireActivity(), R.raw.beber);
 
-        // Leer meta diaria guardada
+        // Leer meta diaria
         SharedPreferences prefs = requireActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
         dailyGoal = prefs.getInt("meta_diaria", 2000);
         progressBar.setMax(dailyGoal);
 
         viewModel = new ViewModelProvider(this).get(WaterViewModel.class);
 
-        // Actualizar consumo actual
+        // Observer del progreso
         viewModel.getTodayTotal().observe(getViewLifecycleOwner(), total -> {
             int current = (total != null) ? total : 0;
 
             tvDailyWater.setText(current + " ml / " + dailyGoal + " ml");
+
             progressBar.setProgress(current);
 
+            //  CAMBIAR COLOR DE LA BARRA SEGÚN AVANCE
+            int color = getProgressColor(current, dailyGoal);
+            progressBar.setProgressTintList(android.content.res.ColorStateList.valueOf(color));
+
             if (current >= dailyGoal) {
-                tvDailyWater.setText("Meta cumplida! 🎉\n" + current + " ml / " + dailyGoal + " ml");
+                tvDailyWater.setText("Lo lograste! 😁\n 🎉\n" + current + " ml / " + dailyGoal + " ml");
             }
         });
 
-        // Botones
+        // --- BOTONES ---
         Button btnShare = view.findViewById(R.id.btn_share);
         btnShare.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_SEND);
@@ -82,11 +86,6 @@ public class HomeFragment extends Fragment {
             startActivity(Intent.createChooser(email, "Enviar correo"));
         });
 
-        Button btnCamera = view.findViewById(R.id.btn_camera);
-        btnCamera.setOnClickListener(v ->
-                startActivity(new Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-        );
-
         Button btnWeb = view.findViewById(R.id.btn_web);
         btnWeb.setOnClickListener(v -> {
             Uri url = Uri.parse("https://www.gob.mx/salud/articulos/la-importancia-de-una-buena-hidratacion");
@@ -104,37 +103,42 @@ public class HomeFragment extends Fragment {
         FloatingActionButton fabGlass = view.findViewById(R.id.fab_add_glass);
         FloatingActionButton fabBottle = view.findViewById(R.id.fab_add_bottle);
 
-        // Vaso
         fabGlass.setOnClickListener(v -> {
             viewModel.insertIntake(250, "Vaso");
-
-            // Reproducir sonido siempre
-            if (drinkSound != null) {
-                if (drinkSound.isPlaying()) {
-                    drinkSound.seekTo(0);
-                }
-                drinkSound.start();
-            }
+            playDrinkSound();
         });
 
-        // Botella
         fabBottle.setOnClickListener(v -> {
             viewModel.insertIntake(300, "Botella");
-
-            if (drinkSound != null) {
-                if (drinkSound.isPlaying()) {
-                    drinkSound.seekTo(0);
-                }
-                drinkSound.start();
-            }
+            playDrinkSound();
         });
 
-        // Mensaje retardado
         new Handler().postDelayed(() ->
                         Toast.makeText(getContext(), "Actualizando datos...", Toast.LENGTH_SHORT).show(),
                 3000);
 
         return view;
+    }
+
+    // ⭐ MÉTODO DE COLOR DINÁMICO
+    private int getProgressColor(int current, int goal) {
+        float p = (float) current / goal;
+
+        if (p < 0.33f) return getResources().getColor(android.R.color.holo_red_light);
+        if (p < 0.66f) return getResources().getColor(android.R.color.holo_orange_light);
+        if (p < 1f)    return getResources().getColor(android.R.color.holo_blue_light);
+
+        return getResources().getColor(android.R.color.holo_green_light);
+    }
+
+    // SONIDO
+    private void playDrinkSound() {
+        if (drinkSound != null) {
+            if (drinkSound.isPlaying()) {
+                drinkSound.seekTo(0);
+            }
+            drinkSound.start();
+        }
     }
 
     @Override

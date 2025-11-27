@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
 
     <application
@@ -18,10 +23,23 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
 
+        <!-- 🔹 PROVIDER PARA LA CÁMARA -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <!-- API KEY DE GOOGLE -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBheeFeBQOREPiH4QjHgh9_Cpjgp8W9XGc"/>
 
+        <!-- ACTIVIDAD PRINCIPAL -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -31,12 +49,11 @@
             </intent-filter>
         </activity>
 
-        <!-- Notificación del recordatorio -->
+        <!-- RECEIVERS -->
         <receiver
             android:name=".receivers.WaterReminderReceiver"
             android:exported="false" />
 
-        <!-- Cambio de fecha -->
         <receiver
             android:name=".receivers.DateChangeReceiver"
             android:exported="true">
@@ -45,7 +62,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- Batería baja -->
         <receiver
             android:name=".receivers.BatteryReceiver"
             android:exported="true">
@@ -53,9 +69,12 @@
                 <action android:name="android.intent.action.BATTERY_LOW" />
             </intent-filter>
         </receiver>
+
+        <!-- SERVICIO -->
         <service
             android:name=".services.HydrationForegroundService"
             android:foregroundServiceType="shortService"/>
+
     </application>
 
 </manifest>
